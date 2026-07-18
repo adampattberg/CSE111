@@ -40,9 +40,34 @@ DRIVER = {
     "experienced": 0.00
 }
 
+
 # ----------------------------
 # Functions
 # ----------------------------
+
+def get_vehicle_info():
+    """Gets the vehicle's weight and horsepower."""
+    weight = float(input("Vehicle weight (lbs): "))
+    horsepower = float(input("Horsepower: "))
+    return weight, horsepower
+
+
+def get_conditions():
+    """Gets traction and driver-related conditions."""
+    print()
+
+    base = input("Traction (low, medium, good, great): ").lower()
+    tires = input("Tires (snow, all season, performance, track): ").lower()
+    road = input("Road (snowy, wet, dry, prepped): ").lower()
+    drivetrain = input("Drive Type (fwd, rwd, awd): ").lower()
+
+    print()
+
+    transmission = input("Transmission (automatic, manual): ").lower()
+    driver = input("Driver Skill (beginner, average, experienced): ").lower()
+
+    return base, tires, road, drivetrain, transmission, driver
+
 
 def calculate_traction(base, tires, road, drivetrain):
     traction = (
@@ -52,7 +77,6 @@ def calculate_traction(base, tires, road, drivetrain):
         + DRIVETRAIN[drivetrain]
     )
 
-    # Prevent impossible values
     traction = max(0.50, min(1.30, traction))
 
     return traction
@@ -63,44 +87,38 @@ def estimate_zero_to_sixty(weight, horsepower, traction,
     """Returns estimated 0-60 time in seconds."""
 
     power_weight = weight / horsepower
-
-    base_time = (power_weight ** (1/3)) * 2.8
+    base_time = (power_weight ** (1 / 3)) * 2.8
 
     time = base_time / traction
 
-    # Penalties
     time += TRANSMISSION[transmission]
     time += DRIVER[driver]
 
     return round(time, 2)
 
 
-# Main
+def main():
+    weight, horsepower = get_vehicle_info()
 
-weight = float(input("Vehicle weight (lbs): "))
-horsepower = float(input("Horsepower: "))
+    (base,
+     tires,
+     road,
+     drivetrain,
+     transmission,
+     driver) = get_conditions()
 
-print()
+    traction = calculate_traction(base, tires, road, drivetrain)
 
-base = input("Traction (low, medium, good, great): ").lower()
-tires = input("Tires (snow, all season, performance, track): ").lower()
-road = input("Road (snowy, wet, dry, prepped): ").lower()
-drivetrain = input("Drive Type (fwd, rwd, awd): ").lower()
+    time = estimate_zero_to_sixty(
+        weight,
+        horsepower,
+        traction,
+        transmission,
+        driver
+    )
 
-print()
+    print()
+    print(f"Estimated 0-60 mph: {time:.2f} seconds")
 
-transmission = input("Transmission (automatic, manual): ").lower()
-driver = input("Driver Skill (beginner, average, experienced): ").lower()
-
-traction = calculate_traction(base, tires, road, drivetrain)
-
-time = estimate_zero_to_sixty(
-    weight,
-    horsepower,
-    traction,
-    transmission,
-    driver
-)
-
-print()
-print(f"Estimated 0-60 mph: {time:.2f} seconds")
+if __name__ == "__main__":
+    main()
