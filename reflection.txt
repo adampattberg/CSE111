@@ -1,0 +1,16 @@
+Please respond thoroughly (at least two sentences for each question) to
+the following three questions.
+
+1. Describe an experience you had this semester where you saw the power of
+functions.
+
+- The activity of pupils.py was really amazing. It is incredibel how python can read csv files, reference them, and edit them for you without ever needing to open the csv file itself. 
+
+2. In your judgment, what is the value of test functions?
+
+- Test functions allow you to double check your work. When you write a function that is complicated, the chances of an error showing is relatively high. Using a test function allows you to use a seperate file to double check your original function to make sure that it is written correctly and performs correctly. 
+
+3. Describe your process for troubleshooting and fixing a program that
+has a problem. What is one thing you can do to improve your process?
+
+- My process for troubleshooting is to check what is the error is exactly and which line it is located in. I then check that section for simple issues like spelling, commas, etc. This is usually where the error is. If the error is more complx then that, I may need to go through past areas of the code that the function references.
